@@ -24,10 +24,11 @@ public final class Tiger extends Animal {
 
     @Override
     public void feed() {
-        if (getDateOfNextFeeding().isBefore(LocalDateTime.now())) {
-            throw new IllegalInvokeTimeException("Feeding cannot be executed before:" + getDateOfNextFeeding());
+        if (getDateOfNextFeeding().isAfter(LocalDateTime.now())) {
+            System.out.println("Feeding cannot be executed before:" + getDateOfNextFeeding());
+            return;
         }
-        setDateOfLastFeeding(LocalDateTime.now());
+        this.setDateOfLastFeeding(LocalDateTime.now());
         System.out.println("Eating " + getFoodEatenPerFeeding() + "Kg of feed.");
     }
 
@@ -41,7 +42,7 @@ public final class Tiger extends Animal {
         StringBuilder sb = new StringBuilder(super.toString());
         return sb.replace(sb.length() - 1, sb.length(), "")
                 .append(", feeding occurs every: ")
-                .append(this.getDateOfNextFeeding())
+                .append(Tiger.feedEveryXHours)
                 .append("h}")
                 .toString();
     }

@@ -1,5 +1,7 @@
 package model;
 
+import util.FeedEveryXHours;
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -9,7 +11,8 @@ import java.util.Map;
 public abstract class ObjectPlus implements Serializable {
     private static Map<Class<? extends ObjectPlus>, List<ObjectPlus>> allExtents = new HashMap<>();
 
-    public ObjectPlus() {}
+    public ObjectPlus() {
+    }
 
     public static <T extends ObjectPlus> void addExtent(T newObject) {
         Class<? extends ObjectPlus> theClass = newObject.getClass();
@@ -20,6 +23,10 @@ public abstract class ObjectPlus implements Serializable {
         System.out.println("Saving extent to a file...");
         try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(path))) {
             out.writeObject(allExtents);
+            FeedEveryXHours staticValue = new FeedEveryXHours();
+            staticValue.add(Monkey.class, Monkey.getFeedEveryXHours());
+            staticValue.add(Tiger.class, Tiger.getFeedEveryXHours());
+            out.writeObject(staticValue);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -29,6 +36,9 @@ public abstract class ObjectPlus implements Serializable {
         System.out.println("Loading extent from a file...");
         try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(path))) {
             allExtents = (HashMap) in.readObject();
+            FeedEveryXHours staticData = (FeedEveryXHours) in.readObject();
+            Monkey.setFeedEveryXHours(staticData.get(Monkey.class));
+            Tiger.setFeedEveryXHours(staticData.get(Tiger.class));
         } catch (EOFException e) {
             System.out.println("Extent file is empty.");
         } catch (FileNotFoundException e) {

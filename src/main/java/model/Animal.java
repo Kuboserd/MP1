@@ -30,12 +30,8 @@ public abstract class Animal extends ObjectPlus {
 
     public abstract LocalDateTime getDateOfNextFeeding();
 
-    public static void printAnimalExtent() {
-        try {
-            ObjectPlus.showExtent(Animal.class);
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
+    public static void printAnimalExtent() throws ClassNotFoundException {
+        ObjectPlus.showExtent(Animal.class);
     }
 
     @Override

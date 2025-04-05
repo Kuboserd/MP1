@@ -10,23 +10,17 @@ public class Food extends ObjectPlus {
         ObjectPlus.addExtent(this);
     }
 
-    public static void refillFood(float amountInKg) {
-        try {
-            Iterable<Food> foods = (Iterable<Food>) ObjectPlus.getExtent(Food.class);
-            foods.forEach(s -> s.setAmountInKg(s.getAmountInKg() + amountInKg));
+    public static void refillFood(float amountInKg) throws ClassNotFoundException {
 
-            System.out.println("Food stocks were refilled");
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
+        Iterable<Food> foods = (Iterable<Food>) ObjectPlus.getExtent(Food.class);
+        foods.forEach(s -> s.setAmountInKg(s.getAmountInKg() + amountInKg));
+
+        System.out.println("Food stocks were refilled");
+
     }
 
-    public static void printFoodExtent() {
-        try {
-            ObjectPlus.showExtent(Food.class);
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
+    public static void printFoodExtent() throws ClassNotFoundException {
+        ObjectPlus.showExtent(Food.class);
     }
 
     @Override
