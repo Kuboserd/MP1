@@ -81,7 +81,7 @@ public class Main {
                             Collections.addAll(favouriteFoodList, favouriteFoodIn.split(","));
                         }
 
-                        System.out.println("Enter date of last feeding. For default enter '0'");
+                        System.out.println("Enter date of last feeding[yyyy-MM-ddTHH:mm:ss]. For current date&time enter '0'");
                         String lastFeedDateIn = in.nextLine().trim();
                         LocalDateTime lastFeedDate;
                         if (lastFeedDateIn.equals("0")) {
@@ -98,7 +98,7 @@ public class Main {
                         int hours = in.nextInt();
                         in.nextLine();
 
-                        System.out.println("Enter species[OPTIONAL]. For empty value enter '0'");
+                        System.out.println("Enter species[OPTIONAL]. For none enter '0'");
                         String species = in.nextLine().trim();
                         if (favouriteFoodIn.equals("0")) {
                             if (animalSelected == 1) {
