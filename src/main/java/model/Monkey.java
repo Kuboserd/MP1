@@ -1,7 +1,5 @@
 package model;
 
-import exceptions.IllegalInvokeTimeException;
-
 import java.time.LocalDateTime;
 import java.util.List;
 
