@@ -14,7 +14,7 @@ public abstract class ObjectPlus implements Serializable {
     public ObjectPlus() {
     }
 
-    public static <T extends ObjectPlus> void addExtent(T newObject) {
+    protected static <T extends ObjectPlus> void addExtent(T newObject) {
         Class<? extends ObjectPlus> theClass = newObject.getClass();
         allExtents.computeIfAbsent(theClass, k -> new ArrayList<>()).add(newObject);
     }
@@ -32,10 +32,11 @@ public abstract class ObjectPlus implements Serializable {
         }
     }
 
+    @SuppressWarnings("unchecked")
     public static void readExtents(String path) {
         System.out.println("Loading extent from a file...");
         try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(path))) {
-            allExtents = (HashMap) in.readObject();
+            allExtents = (HashMap<Class<? extends ObjectPlus>, List<ObjectPlus>>) in.readObject();
             FeedEveryXHours staticData = (FeedEveryXHours) in.readObject();
             Monkey.setFeedEveryXHours(staticData.get(Monkey.class));
             Tiger.setFeedEveryXHours(staticData.get(Tiger.class));
