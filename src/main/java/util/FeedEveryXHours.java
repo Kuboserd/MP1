@@ -1,21 +1,23 @@
 package util;
 
+import model.Animal;
+
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
 public final class FeedEveryXHours implements Serializable {
-    private Map<Class, Integer> staticValues;
+    private final Map<Class<? extends Animal>, Integer> staticValues;
 
     public FeedEveryXHours() {
         this.staticValues = new HashMap<>();
     }
 
-    public int get(Class className) {
+    public int get(Class<? extends Animal> className) {
         return staticValues.get(className);
     }
 
-    public void add(Class className, Integer integer) {
+    public void add(Class<? extends Animal> className, Integer integer) {
         this.staticValues.put(className, integer);
     }
 }
